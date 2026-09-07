@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Correos | Soporte IT</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+        :root {
+            --glass-bg: rgba(15, 23, 42, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --primary-accent: #0ea5e9;
+        }
+
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('fondo.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            font-family: 'Inter', -apple-system, sans-serif;
+            display: flex;
+            align-items: center;
+            color: #f8fafc;
+            margin: 0;
+            padding: 10px;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .card-header-branded {
+            background: linear-gradient(to right, rgba(14, 165, 233, 0.2), transparent);
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .form-control {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 12px;
+            padding: 0.7rem;
+        }
+
+        .form-control:focus {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary-accent);
+            color: white;
+            box-shadow: none;
+        }
+
+        #resultado {
+            height: 550px;
+            overflow-y: auto;
+            background-color: #ffffff;
+            color: #1e293b;
+            border-radius: 16px;
+            padding: 1rem;
+        }
+
+        .btn {
+            border-radius: 12px;
+            padding: 0.8rem;
+            font-weight: 600;
+        }
+
+        label {
+            font-size: 0.8rem;
+            color: #bae6fd;
+            margin-bottom: 0.4rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12" style="max-width: 1000px;">
+                <div class="glass-card">
+                    <div class="card-header-branded text-center">
+                        <h5 class="mb-0">Generador de Emails Biblioteca Digital</h5>
+                        <small class="opacity-50">Area Informatica - CFT San Agustín Constitución</small>
+                    </div>
+
+                    <div class="card-body p-3">
+                        <div class="row g-4">
+                            <div class="col-lg-4">
+                                <div class="mb-3">
+                                    <label>Nombre Funcionari@</label>
+                                    <input type="text" class="form-control" id="nombre" placeholder=" ">
+                                </div>
+                                <div class="mb-3">
+                                    <label>Email Institucional</label>
+                                    <input type="email" class="form-control" id="email" placeholder=" ">
+                                </div>
+                                <div class="mb-3">
+                                    <label>Clave Asignada</label>
+                                    <input type="text" class="form-control" id="clave" placeholder=" ">
+                                </div>
+                                <button class="btn btn-success w-100 shadow-sm" onclick="generarTexto()">
+                                    Generar Mensaje
+                                </button>
+                            </div>
+
+                            <div class="col-lg-8">
+                                <label>Vista Previa:</label>
+                                <div id="resultado">
+                                    <div class="h-100 d-flex align-items-center justify-content-center text-muted text-center">
+                                        <p>Completa los datos...</p>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary w-100 mt-3" onclick="copiarTexto()">
+                                    Copiar texto
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generarTexto() {
+            const nombre = document.getElementById('nombre').value;
+            const email = document.getElementById('email').value;
+            const clave = document.getElementById('clave').value;
+
+            if (!nombre || !email || !clave) {
+                alert("Completa todos los campos.");
+                return;
+            }
+
+            const plantilla = `
+        <div style="font-family: 'Segoe UI', Arial, sans-serif; color: #334155; line-height: 1.5; max-width: 450px; margin: 0 auto; background-color: #ffffff; padding: 10px; border: 1px solid #eee;">
+            
+            <p style="font-size: 18px; margin-bottom: 20px;">Hola <strong>${nombre}</strong> 👋🏻:</p>
+
+            <p style="font-size: 0.95rem; margin-bottom: 20px; text-align: center;">Este es un email para recordarte que cuentas con acceso a la <strong>Biblioteca Digital</strong> proporcionada por <strong>CFT San Agustín,</strong></p>
+            <p style="font-size: 0.90rem;margin-bottom: 20px; text-align: center;">Donde podrás encontrar diversos materiales disponibles para apoyar tus actividades académicas.</p>
+
+            <p style="font-size: 1.3rem; margin-bottom: 22px; text-align: center; color: #F08100;">
+    <strong>¡Esperamos que puedas aprovechar este recurso!</strong> 😁✌️
+</p>
+        
+            
+            <div style="background-color: #f8fafc; border-radius: 12px; padding: 15px; border: 2px solid #e2e8f0; margin-bottom: 25px; text-align: center;">
+                <span style="font-size: 0.75rem; color: #64748b; font-weight: bold; text-transform: uppercase;">Contraseña asignada</span><br>
+                <code style="font-size: 1.5rem; color: #0ea5e9; font-weight: 800; letter-spacing: 1px;">${clave}</code>
+            </div>
+
+            <p style="font-weight: 700; color: #1e293b; margin-bottom: 12px; font-size: 0.9rem;">Tus datos de acceso:</p>
+            
+            <div style="background: #f1f5f9; padding: 14px; border-radius: 10px; margin-bottom: 15px;">
+                <span style="font-size: 0.7rem; color: #64748b; display: block; font-weight: 600;">CORREO:</span>
+                <span style="color: #0ea5e9; font-weight: 600; font-size: 0.95rem; word-break: break-all; text-align: center; display: block;">${email}</span>
+            </div>
+
+            <div style="background: #f1f5f9; padding: 14px; border-radius: 10px; margin-bottom: 25px;">
+                <span style="font-size: 0.7rem; color: #64748b; display: block; font-weight: 600;">URL BIBLIOTECA DIGITAL:</span>
+                <br>
+                <a href="https://elibro.net/es/lc/cftsanagustin/login_usuario/?next=/es/lc/cftsanagustin/inicio/" style="color: #0ea5e9; text-decoration: none; font-weight: 600; font-size: 0.95rem; text-align: center; display: block;">Biblioteca Digital CFT San Agustín 💫</a>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%); color: #ffffff; border-radius: 16px; padding: 25px 15px; margin-bottom: 25px; text-align: center;">
+                <p style="margin: 0 0 15px 0; font-size: 1.1rem; font-weight: 600;">🚀 Acceso a Biblioteca Digital</p>
+                <p style="margin: 0 0 20px 0; font-size: 1rem; opacity: 0.9;">Recuerda que puedes acceder en cualquier momento desde la <strong>Intranet</strong> ubicado dentro el menú <Strong>Sistemas</Strong>:</p>
+                
+                <!-- Tarjeta personalizada estilo imagen -->
+                <a href="https://cftsa-office365-fog.vercel.app" style="text-decoration: none; display: block; overflow: hidden; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                    <div style="background-color: #f97316; padding: 18px 20px; text-align: left; position: relative;">
+                        <!-- SVG del icono de libro semi-transparente -->
+                        <svg style="position: absolute; right: 12px; bottom: 8px; opacity: 0.35; width: 68px; height: 68px;" viewBox="0 0 24 24" fill="#ffffff">
+                            <path d="M19 2H6c-1.2 0-2 .8-2 2v16c0 1.2.8 2 2 2h13c.6 0 1-.4 1-1V3c0-.6-.4-1-1-1zm-1 16H6V4h12v14zM8 6h8v2H8V6zm0 4h8v2H8v-2z"/>
+                        </svg>
+                        <div style="color: #ffffff; font-weight: 700; font-size: 1.15rem; margin-bottom: 22px;">Biblioteca Digital</div>
+                        <div style="color: #ffffff; font-size: 0.9rem; font-weight: 500;">CFT San Agustín</div>
+                    </div>
+                    <div style="background-color: #c2410c; padding: 10px; text-align: center; color: #ffffff; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; gap: 6px;">
+                        <span>Ir al Sitio</span>
+                        <span style="background: #ffffff; color: #c2410c; border-radius: 50%; width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800;">&rarr;</span>
+                    </div>
+                </a>
+            </div>
+
+            <div style="background-color: #fffbeb; border-left: 4px solid #f59e0b; padding: 15px; font-size: 0.90rem; border-radius: 4px; text-align: center;">
+                <strong>Nota:</strong> Ante cualquier consulta, no dudes en visítarnos en nuestra <strong>Oficina de Informática.</strong>
+            </div>
+
+            <p style="margin-top: 30px; font-size: 0.8rem; color: #94a3b8; text-align: center; border-top: 1px solid #f1f5f9; padding-top: 15px;">
+                Equipo de Informática<br>
+                <strong>CFT San Agustín Constitución</strong>
+            </p>
+
+
+            <p style="margin-top: 30px; font-size: 0.65rem; color: #94a3b8; text-align: center; border-top: 1px solid #f1f5f9; padding-top: 15px; font-style: italic;">
+                Este es un correo electrónico automático. Por favor, no responda a este mensaje, a menos que sea necesario.<br>
+            </p>
+        </div>`;
+
+            document.getElementById('resultado').innerHTML = plantilla;
+        }
+
+        function copiarTexto() {
+            const resultadoDiv = document.getElementById('resultado');
+            if (resultadoDiv.innerText.includes("Completa los datos")) return;
+
+            const range = document.createRange();
+            range.selectNodeContents(resultadoDiv);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+
+            try {
+                document.execCommand('copy');
+                alert("¡Copiado! Pégalo en tu aplicación de correo.");
+            } catch (err) {
+                alert("Error al copiar.");
+            }
+            selection.removeAllRanges();
+        }
+    </script>
+</body>
+
+</html>
